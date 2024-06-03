@@ -29,7 +29,7 @@ volPer = 0
 while True:
     success, img = cap.read()
 
-    img = detector.find_hands(img,)
+    img = detector.find_hands(img,draw=False)
     lm_list = detector.find_position(img, draw=False)
 
     if len(lm_list) != 0:

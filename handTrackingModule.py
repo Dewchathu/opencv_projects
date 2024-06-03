@@ -2,6 +2,7 @@ import time
 import cv2
 import mediapipe as mp
 
+
 class HandDetector:
     def __init__(self, mode=False, max_hands=2, detection_con=50, track_con=50):
         self.mode = mode
@@ -44,6 +45,7 @@ class HandDetector:
                     cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
         return lm_list
 
+
 def main():
     p_time = 0
     c_time = 0
@@ -72,6 +74,7 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
+
 
 if __name__ == "__main__":
     main()
