@@ -1,4 +1,3 @@
-import time
 import cv2
 import mediapipe as mp
 
@@ -18,6 +17,7 @@ class HandDetector:
             min_tracking_confidence=self.track_con
         )
         self.mp_draw = mp.solutions.drawing_utils
+        self.results = None
 
     def find_hands(self, img, draw=True):
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -44,37 +44,3 @@ class HandDetector:
                 if draw:
                     cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
         return lm_list
-
-
-def main():
-    p_time = 0
-    c_time = 0
-    detector = HandDetector()
-
-    cap = cv2.VideoCapture(1)
-
-    while True:
-        success, img = cap.read()
-        img = detector.find_hands(img)
-        lm_list = detector.find_position(img)
-        if len(lm_list) != 0:
-            print(lm_list[4])
-
-        c_time = time.time()
-        fps = 1 / (c_time - p_time)
-        p_time = c_time
-
-        cv2.putText(
-            img, f"FPS: {int(fps)}", (10, 40), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 255), 2
-        )
-
-        cv2.imshow("image", img)
-        if cv2.waitKey(1) == ord('q'):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
-
-
-if __name__ == "__main__":
-    main()
